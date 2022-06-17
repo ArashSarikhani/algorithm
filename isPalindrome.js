@@ -19,10 +19,38 @@ function mapToSubstring(s) {
       result.push(s.substring(i, j + 1));
     }
   }
-  let filter = result.filter((s) => isPalindrome(s));
+  let filter = result.filter(
+    (s) =>
+      function isPalindrome(s) {
+        var left = 0;
+        var right = s.length - 1;
+        while (left < right) {
+          if (s[left] !== s[right]) {
+            return false;
+          }
+          left++;
+          right--;
+        }
+
+        return true;
+      }
+  );
   const longest = filter.reduce(function (a, b) {
     return a.length > b.length ? a : b;
   });
 
+  return longest;
+}
+
+function longestPalindrome(s) {
+  let longest = "";
+  for (let i = 0; i < s.length; i++) {
+    for (let j = i; j < s.length; j++) {
+      let sub = s.substring(i, j + 1);
+      if (isPalindrome(sub) && sub.length > longest.length) {
+        longest = sub;
+      }
+    }
+  }
   return longest;
 }
